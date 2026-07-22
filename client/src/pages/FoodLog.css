@@ -1,0 +1,83 @@
+.food-log-page {
+  padding: var(--space-6) var(--space-5) var(--space-8);
+  max-width: 760px;
+}
+
+.food-log-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.food-log-header h1 {
+  font-size: var(--text-xl);
+  margin-top: var(--space-1);
+}
+
+.receipt-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.receipt-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: var(--rule-thin) dashed var(--line-soft);
+  transition: opacity 0.2s ease;
+}
+
+.receipt-row.removing {
+  opacity: 0.3;
+}
+
+.receipt-row:last-child {
+  border-bottom: none;
+}
+
+.receipt-row-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.receipt-name {
+  font-weight: 600;
+  font-size: var(--text-sm);
+}
+
+.receipt-kcal {
+  font-weight: 700;
+  font-size: var(--text-sm);
+}
+
+.receipt-remove {
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  font-size: 1.3rem;
+  line-height: 1;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.receipt-remove:hover {
+  color: var(--coral);
+  background: rgba(255, 107, 74, 0.1);
+}
+
+.receipt-total {
+  margin-top: var(--space-3);
+}
+
+.empty-state {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  padding: var(--space-4) 0;
+}
