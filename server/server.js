@@ -14,9 +14,11 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 app.use("/api/nutrition", nutritionRoutes);
+app.use("/api/foods/search", nutritionRoutes);
 
 // 2. MOUNT THE MEAL ROUTES MIDDLEWARE
 app.use("/api/meals", mealRoutes);
+app.use("/api/food-log", mealRoutes);
 
 app.get("/", (req, res) => {
     res.json({
