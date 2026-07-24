@@ -1,0 +1,138 @@
+.hero {
+  background: var(--paper);
+  padding: var(--space-8) 0;
+}
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--space-7);
+  align-items: center;
+}
+
+.hero-title {
+  font-size: var(--text-3xl);
+  margin-top: var(--space-3);
+}
+
+.hero-sub {
+  margin-top: var(--space-4);
+  max-width: 46ch;
+  color: var(--text-muted);
+  font-size: var(--text-md);
+}
+
+.hero-actions {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+  flex-wrap: wrap;
+}
+
+/* --- Hero label (signature element) --- */
+.hero-label {
+  background: var(--white);
+  border: 3px solid var(--ink);
+  border-top: 12px solid var(--ink);
+  border-radius: var(--radius-sm);
+  padding: var(--space-5) var(--space-6);
+  max-width: 360px;
+  justify-self: end;
+  transform: rotate(1.5deg);
+  box-shadow: 10px 10px 0 var(--lime);
+}
+
+.hero-label-title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  color: var(--ink);
+  padding-bottom: var(--space-2);
+}
+
+.hero-label-rule {
+  height: var(--rule-thin);
+  background: var(--line-soft);
+  margin: var(--space-2) 0;
+}
+
+.hero-label-rule.thick {
+  height: 6px;
+  background: var(--ink);
+}
+
+.hero-label-row {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: var(--text-md);
+  padding: var(--space-1) 0;
+}
+
+.hero-label-row.small {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  padding-left: var(--space-3);
+}
+
+.hero-label-row.muted {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.features {
+  background: var(--ink);
+  padding: var(--space-8) 0;
+}
+
+.features-heading {
+  color: var(--text-on-ink);
+  font-size: var(--text-xl);
+  max-width: 22ch;
+  margin-bottom: var(--space-6);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+}
+
+.feature {
+  border-top: 4px solid var(--lime);
+  padding-top: var(--space-3);
+}
+
+.feature .eyebrow {
+  color: var(--lime-dim);
+}
+
+.feature h3 {
+  color: var(--text-on-ink);
+  font-size: var(--text-md);
+  margin: var(--space-2) 0;
+}
+
+.feature p {
+  color: rgba(243, 247, 238, 0.72);
+  font-size: var(--text-sm);
+}
+
+.site-footer {
+  padding: var(--space-5) 0;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+@media (max-width: 860px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-label {
+    justify-self: start;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+}

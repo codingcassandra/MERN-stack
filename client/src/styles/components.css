@@ -1,0 +1,442 @@
+/* ==========================================================================
+   BUTTONS
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-md);
+  padding: 12px 22px;
+  font-weight: 700;
+  font-size: var(--text-sm);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  background: transparent;
+  color: var(--ink);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  box-shadow: var(--shadow-card);
+}
+
+.btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 0 4px 0 var(--ink);
+}
+
+.btn:active {
+  transform: translate(0, 0);
+  box-shadow: 0 0 0 var(--ink);
+}
+
+.btn-primary {
+  background: var(--green);
+  border-color: var(--ink);
+  color: var(--text-on-ink);
+}
+
+.btn-lime {
+  background: var(--lime);
+  color: var(--ink);
+}
+
+.btn-ghost {
+  box-shadow: none;
+  border-color: var(--line-soft);
+}
+
+.btn-ghost:hover {
+  box-shadow: none;
+  transform: none;
+  border-color: var(--ink);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: var(--shadow-card);
+}
+
+/* ==========================================================================
+   NAVBAR
+   ========================================================================== */
+
+.navbar {
+  background: var(--ink);
+  color: var(--text-on-ink);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  border-bottom: var(--rule-thick) solid var(--lime);
+}
+
+.navbar-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  letter-spacing: -0.01em;
+  color: var(--text-on-ink);
+  text-decoration: none;
+}
+
+.brand-mark {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--lime);
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: var(--space-5);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-on-ink);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  opacity: 0.82;
+  padding: 6px 2px;
+  border-bottom: 2px solid transparent;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  opacity: 1;
+  border-bottom-color: var(--lime);
+}
+
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--green);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  border: 2px solid var(--lime);
+}
+
+.nav-toggle {
+  display: none;
+}
+
+/* ==========================================================================
+   LABEL PANEL — the signature element
+   Modeled on a Nutrition Facts panel: thick top rule, stacked rows,
+   alternating thin/thick dividers, mono numerals for data.
+   ========================================================================== */
+
+.label-panel {
+  background: var(--white);
+  border: 2px solid var(--ink);
+  border-top: var(--rule-thick) solid var(--ink);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4) var(--space-5) var(--space-5);
+}
+
+.label-panel-title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  color: var(--ink);
+  margin-bottom: var(--space-1);
+}
+
+.label-panel-sub {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  padding-bottom: var(--space-3);
+  border-bottom: var(--rule-thick) solid var(--ink);
+  margin-bottom: var(--space-3);
+}
+
+.label-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: var(--space-2) 0;
+  border-bottom: var(--rule-thin) solid var(--line-soft);
+}
+
+.label-row:last-child {
+  border-bottom: none;
+}
+
+.label-row.thick {
+  border-bottom: 3px solid var(--ink);
+}
+
+.label-row-name {
+  font-size: var(--text-sm);
+  color: var(--text);
+  font-weight: 600;
+}
+
+.label-row-value {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.label-row-name.indent {
+  padding-left: var(--space-4);
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   STAT CARD (dashboard) — compact label-panel variant
+   ========================================================================== */
+
+.stat-card {
+  background: var(--white);
+  border: 2px solid var(--ink);
+  border-top: 6px solid var(--green);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4);
+}
+
+.stat-card.accent-lime { border-top-color: var(--lime); }
+.stat-card.accent-coral { border-top-color: var(--coral); }
+
+.stat-card-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.stat-card-value {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--ink);
+  margin-top: var(--space-1);
+  display: block;
+}
+
+.stat-card-value small {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.stat-card-meta {
+  margin-top: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   CALORIE RING
+   ========================================================================== */
+
+.calorie-ring-wrap {
+  background: var(--ink);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.calorie-ring-figures {
+  text-align: center;
+}
+
+.calorie-ring-figures .big {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--lime);
+  display: block;
+}
+
+.calorie-ring-figures .label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-on-ink);
+  opacity: 0.7;
+}
+
+/* ==========================================================================
+   FORMS
+   ========================================================================== */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: var(--space-4);
+}
+
+.field label {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.field input,
+.field select {
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-sm);
+  padding: 11px 14px;
+  font-size: var(--text-base);
+  font-family: var(--font-body);
+  background: var(--white);
+  color: var(--text);
+}
+
+.field input:focus,
+.field select:focus {
+  outline: none;
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(46, 125, 70, 0.22);
+}
+
+.field-hint {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.field-error {
+  font-size: var(--text-xs);
+  color: var(--coral);
+  font-weight: 600;
+}
+
+.divider-or {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: var(--space-5) 0;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+}
+
+.divider-or::before,
+.divider-or::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line-soft);
+}
+
+/* ==========================================================================
+   GOOGLE OAUTH BUTTON
+   ========================================================================== */
+
+.btn-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: 12px 20px;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-md);
+  background: var(--white);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: var(--text-sm);
+  box-shadow: var(--shadow-card);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.btn-google:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 0 4px 0 var(--ink);
+}
+
+.btn-google svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ==========================================================================
+   TOAST / STATUS BANNERS
+   ========================================================================== */
+
+.banner {
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.banner-success {
+  background: #e5f3e8;
+  color: var(--green-dark);
+}
+
+.banner-info {
+  background: #fdf6e0;
+  color: #6b5a12;
+}
+
+.banner-error {
+  background: #ffe9e3;
+  color: #a13c22;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 760px) {
+  .nav-links {
+    display: none;
+  }
+
+  .grid-2,
+  .grid-3 {
+    grid-template-columns: 1fr !important;
+  }
+}

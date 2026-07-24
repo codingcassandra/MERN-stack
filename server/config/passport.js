@@ -2,7 +2,10 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const User = require("../models/User");
 
-passport.use(
+// Registering GoogleStrategy without credentials throws at import time and
+// would take down the whole API, so only wire it up when configured.
+if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET && process.env.GOOGLE_CALLBACK_URL) {
+  passport.use(
   new GoogleStrategy(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
@@ -38,6 +41,7 @@ passport.use(
       }
     }
   )
-);
+  );
+}
 
 module.exports = passport;
