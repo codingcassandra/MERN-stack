@@ -1,28 +1,29 @@
-// utils/sendEmail.js
 const nodemailer = require("nodemailer");
 
-const sendEmail = async (options) => {
-  // 1. Create a transporter (this example uses Gmail, but works with SendGrid, etc.)
-  const transporter = nodemailer.createTransport({
-    service: "Gmail",
-    auth: {
-      user: process.env.EMAIL_USER, 
-      pass: process.env.EMAIL_PASS, 
-    },
+const transporter = nodemailer.createTransport({
+  host: process.env.EMAIL_HOST,
+  port: Number(process.env.EMAIL_PORT) || 587,
+  secure: process.env.EMAIL_PORT === "465",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
+
+const sendVerificationEmail = async (user, token) => {
+  const verifyUrl = `${process.env.CLIENT_URL}/verify-email/${token}`;
+
+  await transporter.sendMail({
+    from: `"Workout & Meal Planner" <${process.env.EMAIL_USER}>`,
+    to: user.email,
+    subject: "Verify your email address",
+    html: `
+      <p>Hi ${user.firstName},</p>
+      <p>Thanks for signing up! Please verify your email address by clicking the link below:</p>
+      <p><a href="${verifyUrl}">Verify Email</a></p>
+      <p>If you didn't create this account, you can ignore this email.</p>
+    `,
   });
-
-  // 2. Define the email options
-  const mailOptions = {
-    from: `NutriTrack App <${process.env.EMAIL_USER}>`,
-    to: options.email,
-    subject: options.subject,
-    text: options.message,
-    // You can also add HTML formatting later if you want a fancy email
-    // html: options.html, 
-  };
-
-  // 3. Send the email
-  await transporter.sendMail(mailOptions);
 };
 
-module.exports = sendEmail;
+module.exports = { sendVerificationEmail };
