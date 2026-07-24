@@ -6,8 +6,9 @@ const connectDB = async () => {
 
     console.log("MongoDB Connected");
   } catch (error) {
+    // Don't process.exit() here: on Vercel this kills the whole serverless
+    // function mid-request, taking down unrelated routes with it.
     console.error("MongoDB Connection Error:", error.message);
-    process.exit(1);
   }
 };
 
