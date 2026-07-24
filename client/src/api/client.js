@@ -14,10 +14,13 @@ const API_BASE =
   "/api";
 
 async function request(path, options = {}) {
+  const token = localStorage.getItem("authToken");
+
   const res = await fetch(`${API_BASE}${path}`, {
     credentials: "include", // send session/JWT cookie for auth'd routes
     headers: {
       "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...options.headers,
     },
     ...options,
@@ -42,7 +45,7 @@ export const api = {
   // ---- Auth ----
   // data: { firstName, lastName, email, password } — matches server/models/User.js
   signup: (data) =>
-    request("/auth/signup", { method: "POST", body: JSON.stringify(data) }),
+    request("/auth/register", { method: "POST", body: JSON.stringify(data) }),
 
   login: (data) =>
     request("/auth/login", { method: "POST", body: JSON.stringify(data) }),

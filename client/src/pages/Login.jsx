@@ -26,7 +26,8 @@ export default function Login() {
         // Backend sends a verification email; don't log the user in yet.
         setStatus("verify-sent");
       } else {
-        await api.login({ email: form.email, password: form.password });
+        const res = await api.login({ email: form.email, password: form.password });
+        localStorage.setItem("authToken", res.token);
         navigate("/dashboard");
       }
     } catch (err) {

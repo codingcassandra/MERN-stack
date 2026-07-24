@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import VerifyEmail from "./pages/VerifyEmail";
+import OAuthSuccess from "./pages/OAuthSuccess";
 import Dashboard from "./pages/Dashboard";
 import FoodLog from "./pages/FoodLog";
 import FoodSearch from "./pages/FoodSearch";
@@ -23,6 +24,7 @@ export default function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/verify-email/:token" element={<VerifyEmail />} />
+        <Route path="/oauth-success" element={<OAuthSuccess />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/food-log" element={<FoodLog />} />
         <Route path="/search" element={<FoodSearch />} />
