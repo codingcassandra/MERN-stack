@@ -5,7 +5,7 @@
 const getNutritionData = async (req, res) => {
   try {
     // 1. Grab the food item from the URL query string (e.g., ?query=chicken)
-    const { query } = req.query;
+    const query = req.query.query || req.query.q;
 
     if (!query) {
       return res.status(400).json({ message: "Please provide a food query" });
