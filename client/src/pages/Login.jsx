@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams, Link } from "react-router-dom";
-import GoogleButton from "../components/GoogleButton";
 import api from "../api/client";
 import "./Login.css";
 
@@ -70,10 +69,6 @@ export default function Login() {
           <h1 className="label-panel-title">
             {isSignup ? "Start your log" : "Log in to NutriFuel"}
           </h1>
-
-          <GoogleButton />
-
-          <div className="divider-or">or with email</div>
 
           {status === "error" && (
             <p className="banner banner-error" role="alert">
