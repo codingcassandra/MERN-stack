@@ -6,6 +6,7 @@ process.env.GOOGLE_CALLBACK_URL = "http://localhost:5001/api/auth/google/callbac
 
 jest.mock("../models/Meal");
 jest.mock("../models/User");
+jest.mock("../config/db");
 
 const request = require("supertest");
 const jwt = require("jsonwebtoken");

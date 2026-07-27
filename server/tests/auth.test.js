@@ -6,6 +6,7 @@ process.env.GOOGLE_CALLBACK_URL = "http://localhost:5001/api/auth/google/callbac
 
 jest.mock("../models/User");
 jest.mock("../utils/sendEmail");
+jest.mock("../config/db");
 
 const request = require("supertest");
 const bcrypt = require("bcrypt");
