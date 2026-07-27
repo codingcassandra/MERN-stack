@@ -7,6 +7,8 @@ const connectDB = require("./config/db");
 const mealRoutes = require("./routes/mealRoutes");
 const nutritionRoutes = require("./routes/nutritionRoutes");
 const authRoutes = require("./routes/authRoutes");
+const dashboardRoutes = require("./routes/dashboardRoutes");
+const profileRoutes = require("./routes/profileRoutes");
 require("./config/passport");
 
 const app = express();
@@ -27,6 +29,8 @@ app.use("/api/nutrition", nutritionRoutes);
 app.use("/api/foods/search", nutritionRoutes);
 app.use("/api/meals", mealRoutes);
 app.use("/api/food-log", mealRoutes);
+app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/profile", profileRoutes);
 
 // Runs on every cold start (serverless) and once at boot (local/traditional hosting).
 connectDB();

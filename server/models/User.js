@@ -38,6 +38,26 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
+
+    calorieGoal: {
+      type: Number,
+      default: 2100,
+    },
+
+    proteinGoal: {
+      type: Number,
+      default: 140,
+    },
+
+    carbGoal: {
+      type: Number,
+      default: 230,
+    },
+
+    fatGoal: {
+      type: Number,
+      default: 70,
+    },
   },
   {
     timestamps: true,

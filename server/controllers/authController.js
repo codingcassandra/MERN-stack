@@ -101,6 +101,39 @@ const verifyEmail = async (req, res) => {
   }
 };
 
+const resendVerification = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ success: false, message: "Email is required" });
+    }
+
+    const user = await User.findOne({ email: email.toLowerCase() });
+
+    // Don't reveal whether an account exists for this email.
+    if (!user) {
+      return res.json({
+        success: true,
+        message: "If an account exists for that email, a verification link has been sent.",
+      });
+    }
+
+    if (user.isVerified) {
+      return res.json({ success: true, message: "This account is already verified. You can log in." });
+    }
+
+    user.verificationToken = randomUUID();
+    await user.save();
+
+    await sendVerificationEmail(user, user.verificationToken);
+
+    res.json({ success: true, message: "Verification email sent." });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server error", error: error.message });
+  }
+};
+
 const googleCallback = (req, res) => {
   const token = generateToken(req.user._id);
   res.redirect(`${process.env.CLIENT_URL}/oauth-success?token=${token}`);
@@ -114,4 +147,4 @@ const logout = (req, res) => {
   res.json({ success: true, message: "Logged out successfully" });
 };
 
-module.exports = { register, login, verifyEmail, googleCallback, getMe, logout };
+module.exports = { register, login, verifyEmail, resendVerification, googleCallback, getMe, logout };

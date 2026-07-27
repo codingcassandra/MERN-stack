@@ -1,49 +1,57 @@
 const Meal = require("../models/Meal");
 
-// @desc    Get all logged meals for a user
+// Shapes a Meal document for the frontend (adds `id` + a human-readable
+// `time` alongside the raw Mongo fields, so both /api/meals consumers and
+// the food-log UI can read the same response).
+const formatMeal = (meal) => ({
+  id: meal._id.toString(),
+  _id: meal._id,
+  name: meal.name,
+  calories: meal.calories,
+  protein: meal.protein,
+  carbs: meal.carbs,
+  fats: meal.fats,
+  ingredients: meal.ingredients,
+  image: meal.image,
+  time: meal.createdAt?.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" }),
+  createdAt: meal.createdAt,
+});
+
+// @desc    Get all logged meals for the authenticated user
 // @route   GET /api/meals
 const getMeals = async (req, res) => {
   try {
-    // TOMORROW: Swap this to use the authenticated user's ID
-    // const meals = await Meal.find({ user: req.user.id });
-    
-    const dummyUserId = "60d5ec49f1b2c8b1f8e4b1a2"; 
-    const meals = await Meal.find({ user: dummyUserId });
-    
-    res.status(200).json(meals);
+    const meals = await Meal.find({ user: req.user._id }).sort({ createdAt: -1 });
+    res.status(200).json(meals.map(formatMeal));
   } catch (error) {
     res.status(500).json({ message: "Server Error", error: error.message });
   }
 };
 
-// @desc    Log a new meal
+// @desc    Log a new meal for the authenticated user
 // @route   POST /api/meals
 const createMeal = async (req, res) => {
   try {
-    // Destructuring all the fields required by your Meal schema
     const { name, calories, protein, carbs, fats, ingredients, image } = req.body;
 
-    // TOMORROW: Swap dummyUserId for req.user.id
-    const dummyUserId = "60d5ec49f1b2c8b1f8e4b1a2"; 
-
     const newMeal = await Meal.create({
-      user: dummyUserId,
+      user: req.user._id,
       name,
       calories,
       protein,
       carbs,
       fats,
       ingredients,
-      image
+      image,
     });
 
-    res.status(201).json(newMeal);
+    res.status(201).json(formatMeal(newMeal));
   } catch (error) {
     res.status(400).json({ message: "Failed to create meal", error: error.message });
   }
 };
 
-// @desc    Update a logged meal
+// @desc    Update a logged meal (only the owner may update it)
 // @route   PUT /api/meals/:id
 const updateMeal = async (req, res) => {
   try {
@@ -53,22 +61,19 @@ const updateMeal = async (req, res) => {
       return res.status(404).json({ message: "Meal not found" });
     }
 
-    // TOMORROW: Add a check here to ensure req.user.id === meal.user.toString()
-    // so users can't edit other people's meals!
+    if (meal.user.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "Not authorized to modify this meal" });
+    }
 
-    const updatedMeal = await Meal.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true } // Returns the updated document
-    );
+    const updatedMeal = await Meal.findByIdAndUpdate(req.params.id, req.body, { new: true });
 
-    res.status(200).json(updatedMeal);
+    res.status(200).json(formatMeal(updatedMeal));
   } catch (error) {
     res.status(400).json({ message: "Failed to update meal", error: error.message });
   }
 };
 
-// @desc    Delete a logged meal
+// @desc    Delete a logged meal (only the owner may delete it)
 // @route   DELETE /api/meals/:id
 const deleteMeal = async (req, res) => {
   try {
@@ -78,7 +83,9 @@ const deleteMeal = async (req, res) => {
       return res.status(404).json({ message: "Meal not found" });
     }
 
-    // TOMORROW: Add a check here to ensure req.user.id === meal.user.toString()
+    if (meal.user.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "Not authorized to modify this meal" });
+    }
 
     await meal.deleteOne();
     res.status(200).json({ message: "Meal deleted successfully", id: req.params.id });
@@ -92,4 +99,5 @@ module.exports = {
   createMeal,
   updateMeal,
   deleteMeal,
+  formatMeal,
 };

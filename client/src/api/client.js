@@ -55,9 +55,7 @@ export const api = {
   googleLoginUrl: () => `${API_BASE}/auth/google`,
 
   verifyEmail: (token) =>
-    request(`/auth/verify-email/${encodeURIComponent(token)}`, {
-      method: "POST",
-    }),
+    request(`/auth/verify-email/${encodeURIComponent(token)}`),
 
   resendVerification: (email) =>
     request("/auth/resend-verification", {
