@@ -1,12 +1,24 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import api from "../api/client";
 
 /**
  * Top navigation. `user` is optional — pass null/undefined for logged-out state.
  */
 export default function Navbar({ user }) {
+  const navigate = useNavigate();
   const initials = user?.name
     ? user.name.split(" ").map((n) => n[0]).slice(0, 2).join("").toUpperCase()
     : "?";
+
+  async function handleLogout() {
+    try {
+      await api.logout();
+    } catch {
+      // Still clear the local session even if the network call fails.
+    }
+    localStorage.removeItem("authToken");
+    navigate("/login", { replace: true });
+  }
 
   return (
     <header className="navbar">
@@ -50,6 +62,9 @@ export default function Navbar({ user }) {
                 {initials}
               </span>
             </NavLink>
+            <button type="button" className="nav-logout" onClick={handleLogout}>
+              Log out
+            </button>
           </div>
         ) : (
           <NavLink to="/login" className="btn btn-lime">
