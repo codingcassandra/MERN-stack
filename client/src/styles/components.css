@@ -152,6 +152,21 @@
   border: 2px solid var(--lime);
 }
 
+.nav-logout {
+  background: none;
+  border: none;
+  color: var(--text-on-ink);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  opacity: 0.82;
+  padding: 6px 2px;
+  cursor: pointer;
+}
+
+.nav-logout:hover {
+  opacity: 1;
+}
+
 .nav-toggle {
   display: none;
 }
