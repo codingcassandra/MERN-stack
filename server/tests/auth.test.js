@@ -126,6 +126,48 @@ describe("GET /api/auth/verify-email/:token", () => {
   });
 });
 
+describe("POST /api/auth/resend-verification", () => {
+  it("rejects a request with no email", async () => {
+    const res = await request(app).post("/api/auth/resend-verification").send({});
+    expect(res.status).toBe(400);
+  });
+
+  it("sends a new verification email for an unverified account", async () => {
+    const save = jest.fn().mockResolvedValue(true);
+    User.findOne.mockResolvedValue({ ...baseUser, isVerified: false, save });
+
+    const res = await request(app)
+      .post("/api/auth/resend-verification")
+      .send({ email: "jane@example.com" });
+
+    expect(res.status).toBe(200);
+    expect(save).toHaveBeenCalled();
+    expect(sendVerificationEmail).toHaveBeenCalledTimes(1);
+  });
+
+  it("does not resend for an already-verified account", async () => {
+    User.findOne.mockResolvedValue({ ...baseUser, isVerified: true });
+
+    const res = await request(app)
+      .post("/api/auth/resend-verification")
+      .send({ email: "jane@example.com" });
+
+    expect(res.status).toBe(200);
+    expect(sendVerificationEmail).not.toHaveBeenCalled();
+  });
+
+  it("responds successfully without leaking whether the email exists", async () => {
+    User.findOne.mockResolvedValue(null);
+
+    const res = await request(app)
+      .post("/api/auth/resend-verification")
+      .send({ email: "nobody@example.com" });
+
+    expect(res.status).toBe(200);
+    expect(sendVerificationEmail).not.toHaveBeenCalled();
+  });
+});
+
 describe("GET /api/auth/me", () => {
   it("rejects requests with no token", async () => {
     const res = await request(app).get("/api/auth/me");

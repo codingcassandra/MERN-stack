@@ -4,6 +4,7 @@ const {
   register,
   login,
   verifyEmail,
+  resendVerification,
   googleCallback,
   getMe,
   logout,
@@ -16,6 +17,7 @@ router.post("/register", register);
 router.post("/login", login);
 router.post("/logout", logout);
 router.get("/verify-email/:token", verifyEmail);
+router.post("/resend-verification", resendVerification);
 router.get("/me", protect, getMe);
 
 router.get(
