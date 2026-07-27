@@ -1,33 +1,65 @@
 // controllers/nutritionController.js
 
-// @desc    Get nutritional data for a specific food item
+const RESULTS_LIMIT = 8;
+
+const nutrientAmount = (nutrients, label) =>
+  (nutrients || []).find((n) => (n.name || n.title) === label)?.amount ?? 0;
+
+const titleCase = (name) => (name ? name[0].toUpperCase() + name.slice(1) : name);
+
+// @desc    Search foods matching a query and return macros for each
 // @route   GET /api/nutrition?query=foodName
 const getNutritionData = async (req, res) => {
   try {
-    // 1. Grab the food item from the URL query string (e.g., ?query=chicken)
     const query = req.query.query || req.query.q;
 
     if (!query) {
       return res.status(400).json({ message: "Please provide a food query" });
     }
 
-    // 2. Securely access your secret API key from the .env file
     const apiKey = process.env.SPOONACULAR_API_KEY;
 
-    // 3. Make the request to the Spoonacular API 
-    // (Using the guessNutrition endpoint as an example)
-    const url = `https://api.spoonacular.com/recipes/guessNutrition?title=${query}&apiKey=${apiKey}`;
-    
-    const response = await fetch(url);
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.message || "Failed to fetch from Spoonacular API");
+    if (!apiKey) {
+      return res.status(500).json({ message: "Spoonacular API key is not configured" });
     }
 
-    // 4. Send the data back to your frontend
-    res.status(200).json(data);
+    // 1. Search for ingredients matching the query (name + id only).
+    const searchUrl = `https://api.spoonacular.com/food/ingredients/search?query=${encodeURIComponent(
+      query
+    )}&number=${RESULTS_LIMIT}&apiKey=${apiKey}`;
 
+    const searchRes = await fetch(searchUrl);
+    const searchData = await searchRes.json();
+
+    if (!searchRes.ok) {
+      throw new Error(searchData.message || "Failed to search Spoonacular");
+    }
+
+    // 2. Fetch macros for each match (100g basis) in parallel.
+    const results = await Promise.all(
+      (searchData.results || []).map(async (item) => {
+        const infoUrl = `https://api.spoonacular.com/food/ingredients/${item.id}/information?amount=100&unit=grams&apiKey=${apiKey}`;
+        const infoRes = await fetch(infoUrl);
+
+        if (!infoRes.ok) {
+          return null;
+        }
+
+        const info = await infoRes.json();
+        const nutrients = info.nutrition?.nutrients;
+
+        return {
+          id: String(item.id),
+          name: titleCase(info.name) || item.name,
+          calories: Math.round(nutrientAmount(nutrients, "Calories")),
+          protein: Math.round(nutrientAmount(nutrients, "Protein")),
+          carbs: Math.round(nutrientAmount(nutrients, "Carbohydrates")),
+          fats: Math.round(nutrientAmount(nutrients, "Fat")),
+        };
+      })
+    );
+
+    res.status(200).json(results.filter(Boolean));
   } catch (error) {
     res.status(500).json({ message: "Server Error", error: error.message });
   }
