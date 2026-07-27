@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { MUSCLE_GROUPS } = require("../utils/muscleNutrition");
 
 const workoutSchema = new mongoose.Schema(
   {
@@ -15,8 +16,9 @@ const workoutSchema = new mongoose.Schema(
 
     exercises: [
       {
-        name: String,
-        sets: Number,
+        name: { type: String, required: true },
+        muscleGroup: { type: String, enum: MUSCLE_GROUPS, required: true },
+        sets: { type: Number, required: true },
         reps: Number,
         weight: Number,
       },

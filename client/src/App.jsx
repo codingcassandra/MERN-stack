@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import FoodLog from "./pages/FoodLog";
 import FoodSearch from "./pages/FoodSearch";
 import Profile from "./pages/Profile";
+import WorkoutLog from "./pages/WorkoutLog";
 
 import "./styles/theme.css";
 import "./styles/components.css";
@@ -28,6 +29,7 @@ export default function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/food-log" element={<FoodLog />} />
         <Route path="/search" element={<FoodSearch />} />
+        <Route path="/workouts" element={<WorkoutLog />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
