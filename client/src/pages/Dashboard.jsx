@@ -16,6 +16,7 @@ const FALLBACK = {
     { name: "Almonds (1 oz)", calories: 165, time: "3:00 PM" },
     { name: "Salmon, rice, broccoli", calories: 445, time: "6:45 PM" },
   ],
+  muscleRecommendations: [],
 };
 
 export default function Dashboard({ user }) {
@@ -51,6 +52,33 @@ export default function Dashboard({ user }) {
         </header>
 
         {loading && <p className="eyebrow">Loading today's data…</p>}
+
+        {(data.muscleRecommendations ?? []).length > 0 && (
+          <section className="muscle-recovery">
+            <h2 className="section-heading">Muscle recovery</h2>
+            <p className="label-panel-sub muscle-recovery-note">
+              Based on today's workouts — a rough guide, not medical advice.
+            </p>
+            <div className="muscle-recovery-grid">
+              {data.muscleRecommendations.map((m) => (
+                <div className="label-panel muscle-card" key={m.muscleGroup}>
+                  <p className="label-panel-title muscle-card-title">
+                    {m.muscleGroup[0].toUpperCase() + m.muscleGroup.slice(1)}
+                  </p>
+                  <p className="label-panel-sub">{m.setsLogged} sets trained today</p>
+                  {m.proteinRemaining > 0 || m.carbsRemaining > 0 ? (
+                    <p className="muscle-card-copy">
+                      Eat ~{m.proteinRemaining}g more protein and ~{m.carbsRemaining}g more carbs to
+                      support recovery.
+                    </p>
+                  ) : (
+                    <p className="muscle-card-copy">You've already hit today's recovery target. Nice work.</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
         <div className="dashboard-grid">
           <CalorieRing consumed={data.calories.consumed} goal={data.calories.goal} />

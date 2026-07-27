@@ -35,6 +35,11 @@ export default function Navbar({ user }) {
                 Add Food
               </NavLink>
             </li>
+            <li>
+              <NavLink to="/workouts" className={({ isActive }) => (isActive ? "active" : "")}>
+                Workouts
+              </NavLink>
+            </li>
           </ul>
         )}
 

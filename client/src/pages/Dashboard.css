@@ -49,3 +49,24 @@
     grid-column: auto;
   }
 }
+
+.muscle-recovery-note {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: var(--space-3);
+}
+
+.muscle-recovery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4);
+}
+
+.muscle-card-title {
+  text-transform: capitalize;
+}
+
+.muscle-card-copy {
+  font-size: var(--text-sm);
+  margin-top: var(--space-2);
+}

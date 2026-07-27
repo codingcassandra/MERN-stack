@@ -83,6 +83,14 @@ export const api = {
 
   updateProfile: (data) =>
     request("/profile", { method: "PUT", body: JSON.stringify(data) }),
+
+  // ---- Workouts ----
+  getWorkouts: () => request("/workouts"),
+
+  addWorkout: (workout) =>
+    request("/workouts", { method: "POST", body: JSON.stringify(workout) }),
+
+  deleteWorkout: (id) => request(`/workouts/${id}`, { method: "DELETE" }),
 };
 
 export default api;

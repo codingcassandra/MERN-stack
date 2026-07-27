@@ -9,6 +9,7 @@ const nutritionRoutes = require("./routes/nutritionRoutes");
 const authRoutes = require("./routes/authRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 const profileRoutes = require("./routes/profileRoutes");
+const workoutRoutes = require("./routes/workoutRoutes");
 require("./config/passport");
 
 const app = express();
@@ -44,6 +45,7 @@ app.use("/api/meals", mealRoutes);
 app.use("/api/food-log", mealRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/profile", profileRoutes);
+app.use("/api/workouts", workoutRoutes);
 
 if (require.main === module) {
   const PORT = process.env.PORT || 5001;
